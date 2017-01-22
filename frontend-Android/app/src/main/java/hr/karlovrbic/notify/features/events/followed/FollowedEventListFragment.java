@@ -142,6 +142,6 @@ public class FollowedEventListFragment extends BaseFragment implements IFollowed
     }
 
     private void showEvent(Long eventId) {
-        ((MainActivity) getActivity()).addFragment(EventFragment.newInstance(eventId));
+        ((MainActivity) getActivity()).addFragment(EventFragment.newInstance(eventId,adapter.getUserId()));
     }
 }

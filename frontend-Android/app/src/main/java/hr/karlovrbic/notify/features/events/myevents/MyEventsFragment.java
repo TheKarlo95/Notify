@@ -149,6 +149,6 @@ public class MyEventsFragment extends BaseFragment implements IMyEvents.View, Cr
     }
 
     private void showEvent(Long eventId) {
-        ((MainActivity) getActivity()).addFragment(EventFragment.newInstance(eventId));
+        ((MainActivity) getActivity()).addFragment(EventFragment.newInstance(eventId, adapter.getUserId()));
     }
 }

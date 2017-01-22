@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
@@ -40,7 +41,9 @@ public class EventFragment extends BaseFragment implements IEvent.View, CreateMe
 
     public static final String CREATE_MESSAGE_TAG = "create_message_dialog";
     private static final String ARGUMENT_EVENT_ID = "event_id";
+    private static final String ARGUMENT_USER_ID = "user_id";
     private static final String KEY_EVENT = "event";
+    private static final String  kEY_USER_ID = "user_id";
 
     @BindView(R.id.civ_event_image)
     CircleImageView civEventImage;
@@ -52,6 +55,8 @@ public class EventFragment extends BaseFragment implements IEvent.View, CreateMe
     TextView tvDescription;
     @BindView(R.id.rv_events)
     RecyclerView rvEvents;
+    @BindView(R.id.btn_add_message)
+    Button btnAddMessage;
 
     @Inject
     IEvent.Presenter presenter;
@@ -60,12 +65,14 @@ public class EventFragment extends BaseFragment implements IEvent.View, CreateMe
 
     private MessagesListAdapter adapter;
     private Unbinder unbinder;
+    private Long userId;
 
-    public static EventFragment newInstance(long id) {
+    public static EventFragment newInstance(long id, long userId) {
         EventFragment fragment = new EventFragment();
 
         Bundle bundle = new Bundle();
         bundle.putLong(ARGUMENT_EVENT_ID, id);
+        bundle.putLong(ARGUMENT_USER_ID, userId);
         fragment.setArguments(bundle);
 
         return fragment;
@@ -81,9 +88,11 @@ public class EventFragment extends BaseFragment implements IEvent.View, CreateMe
 
         if (savedInstanceState == null) {
             Bundle args = getArguments();
+            userId = args.getLong(ARGUMENT_USER_ID);
             presenter.getEvent(args.getLong(ARGUMENT_EVENT_ID));
         } else {
             event = savedInstanceState.getParcelable(KEY_EVENT);
+            userId = savedInstanceState.getLong(kEY_USER_ID);
             showEvent(event);
         }
 
@@ -94,6 +103,7 @@ public class EventFragment extends BaseFragment implements IEvent.View, CreateMe
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelable(KEY_EVENT, event);
+        outState.putLong(kEY_USER_ID, userId);
     }
 
     @Override
@@ -113,6 +123,12 @@ public class EventFragment extends BaseFragment implements IEvent.View, CreateMe
 
             adapter.setMessages(event.getMessages());
             adapter.setEventId(event.getId());
+
+            if(userId.equals(event.getCreator().getId())) {
+                btnAddMessage.setVisibility(View.VISIBLE);
+            } else {
+                btnAddMessage.setVisibility(View.GONE);
+            }
         }
     }
 
@@ -131,7 +147,7 @@ public class EventFragment extends BaseFragment implements IEvent.View, CreateMe
         appComponent.plus(new EventModule(this)).inject(this);
     }
 
-    @OnClick()
+    @OnClick(R.id.btn_add_message)
     public void addMessageClicked() {
         CreateMessageDialog dialog = new CreateMessageDialog();
 

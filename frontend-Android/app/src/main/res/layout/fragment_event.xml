@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="@color/colorSecondary">
 
     <ImageView
@@ -21,8 +21,8 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/user_profile_image_margin_top"
-        android:src="@drawable/ic_person_placeholder"
         android:background="@drawable/profile_background"
+        android:src="@drawable/ic_events_grey"
         app:civ_border_color="@color/colorPrimaryDark"
         app:civ_border_width="5dp"/>
 
@@ -66,9 +66,10 @@
         android:id="@+id/rv_events"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/btn_add_message"
+        android:layout_below="@+id/tv_description"
         android:scrollbars="vertical"
         app:layoutManager="LinearLayoutManager"
-        android:layout_below="@+id/tv_description"
         tools:listitem="@layout/item_message"/>
 
     <Button
@@ -79,5 +80,6 @@
         android:layout_margin="10dp"
         android:textColor="@color/white"
         android:text="Add message"
+        android:visibility="gone"
         android:layout_alignParentBottom="true"/>
 </RelativeLayout>
