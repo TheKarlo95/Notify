@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/action_users"
+        android:icon="@drawable/ic_users"
+        android:title="Users"/>
+    <item
+        android:id="@+id/action_events"
+        android:icon="@drawable/ic_events"
+        android:title="All Events"/>
+    <item
+        android:id="@+id/action_followed"
+        android:icon="@drawable/ic_subscribed_events"
+        android:title="Followed"/>
+    <item
+        android:id="@+id/action_my_events"
+        android:icon="@drawable/ic_subscribed_events"
+        android:title="My Events"/>
+</menu>

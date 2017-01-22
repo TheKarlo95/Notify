@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorSecondary">
+
+    <ImageView
+        android:id="@+id/iv_upper_background"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/user_profile_background_height"
+        android:layout_alignParentTop="true"
+        android:src="@color/colorPrimaryDark"/>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/civ_event_image"
+        android:layout_width="@dimen/user_profile_image_size"
+        android:layout_height="@dimen/user_profile_image_size"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/user_profile_image_margin_top"
+        android:src="@drawable/ic_person_placeholder"
+        android:background="@drawable/profile_background"
+        app:civ_border_color="@color/colorPrimaryDark"
+        app:civ_border_width="5dp"/>
+
+    <TextView
+        android:id="@+id/tv_title"
+        style="@style/UserProfile.Username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/civ_event_image"
+        android:layout_centerHorizontal="true"
+        tools:text="Example event"/>
+
+    <TextView
+        android:id="@+id/tv_creator"
+        style="@style/UserProfile.Username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_title"
+        android:layout_centerHorizontal="true"
+        tools:text="Korisnik1"/>
+
+    <TextView
+        android:id="@+id/tv_date"
+        style="@style/UserProfile.FullName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_creator"
+        android:layout_centerHorizontal="true"
+        tools:text="17.02.2017 20:00:00"/>
+
+    <TextView
+        android:id="@+id/tv_description"
+        style="@style/UserProfile.FullName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_date"
+        android:layout_centerHorizontal="true"
+        tools:text="Example desription that descripts this event"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_events"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="vertical"
+        app:layoutManager="LinearLayoutManager"
+        android:layout_below="@+id/tv_description"
+        tools:listitem="@layout/item_message"/>
+
+    <Button
+        android:id="@+id/btn_add_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorAccent"
+        android:layout_margin="10dp"
+        android:textColor="@color/white"
+        android:text="Add message"
+        android:layout_alignParentBottom="true"/>
+</RelativeLayout>
