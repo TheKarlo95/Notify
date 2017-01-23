@@ -30,7 +30,7 @@ public class LoginPresenter implements ILogin.Presenter {
         interactor.execute(new DisposableObserver<User>() {
             @Override
             public void onNext(User value) {
-                view.loginSuccessful(value.getId());
+                view.loginSuccessful(value);
                 view.hideLoading();
             }
 

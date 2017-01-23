@@ -25,8 +25,7 @@ import hr.karlovrbic.notify.features.main.MainActivity;
 import hr.karlovrbic.notify.features.shared.ItemClickListener;
 import hr.karlovrbic.notify.features.shared.view.BaseFragment;
 import hr.karlovrbic.notify.model.Event;
-
-import static hr.karlovrbic.notify.features.main.MainActivity.KEY_USER_ID;
+import hr.karlovrbic.notify.utils.SharedPrefsUtils;
 
 /**
  * Created by thekarlo95 on 21.01.17..
@@ -47,14 +46,8 @@ public class EventListFragment extends BaseFragment implements IEventList.View {
     private Unbinder unbinder;
     private ArrayList<Event> events;
 
-    public static EventListFragment newInstance(long userId) {
-        EventListFragment fragment = new EventListFragment();
-
-        Bundle bundle = new Bundle();
-        bundle.putLong(ARGUMENT_USER_ID, userId);
-        fragment.setArguments(bundle);
-
-        return fragment;
+    public static EventListFragment newInstance() {
+        return new EventListFragment();
     }
 
     @Override
@@ -64,15 +57,14 @@ public class EventListFragment extends BaseFragment implements IEventList.View {
         unbinder = ButterKnife.bind(this, view);
 
         if (savedInstanceState == null) {
-            Bundle args = getArguments();
-            Long userId = args.getLong(KEY_USER_ID);
+            Long userId = SharedPrefsUtils.getUserId(getContext());
 
             initEventList(null, userId);
 
             presenter.getEventList();
         } else {
             ArrayList<Event> events = savedInstanceState.getParcelableArrayList(KEY_EVENTS);
-            Long userId = savedInstanceState.getLong(KEY_USER_ID);
+            Long userId = SharedPrefsUtils.getUserId(getContext());
 
             initEventList(events, userId);
         }
@@ -140,6 +132,6 @@ public class EventListFragment extends BaseFragment implements IEventList.View {
     }
 
     private void showEvent(Long eventId) {
-        ((MainActivity) getActivity()).addFragment(EventFragment.newInstance(eventId, adapter.getUserId()));
+        ((MainActivity) getActivity()).addFragment(EventFragment.newInstance(eventId));
     }
 }

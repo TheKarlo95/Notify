@@ -29,11 +29,11 @@ import hr.karlovrbic.notify.features.shared.ItemClickListener;
 import hr.karlovrbic.notify.features.shared.view.BaseFragment;
 import hr.karlovrbic.notify.model.Event;
 import hr.karlovrbic.notify.model.EventCreate;
+import hr.karlovrbic.notify.utils.SharedPrefsUtils;
 
 public class MyEventsFragment extends BaseFragment implements IMyEvents.View, CreateEventDialogCallback {
 
     public static final String CREATE_EVENT_TAG = "create_event_dialog";
-    private static final String KEY_USER_ID = "user_id";
     private static final String KEY_EVENTS = "events";
 
     @BindView(R.id.rv_my_events)
@@ -45,14 +45,8 @@ public class MyEventsFragment extends BaseFragment implements IMyEvents.View, Cr
     private EventListAdapter adapter;
     private Unbinder unbinder;
 
-    public static MyEventsFragment newInstance(long userId) {
-        MyEventsFragment fragment = new MyEventsFragment();
-
-        Bundle bundle = new Bundle();
-        bundle.putLong(KEY_USER_ID, userId);
-        fragment.setArguments(bundle);
-
-        return fragment;
+    public static MyEventsFragment newInstance() {
+        return new MyEventsFragment();
     }
 
     @Override
@@ -62,15 +56,14 @@ public class MyEventsFragment extends BaseFragment implements IMyEvents.View, Cr
         unbinder = ButterKnife.bind(this, view);
 
         if (savedInstanceState == null) {
-            Bundle args = getArguments();
-            Long userId = args.getLong(KEY_USER_ID);
+            Long userId = SharedPrefsUtils.getUserId(getContext());
 
             initEventList(null, userId);
 
             presenter.getMyEventList(userId);
         } else {
             ArrayList<Event> events = savedInstanceState.getParcelableArrayList(KEY_EVENTS);
-            Long userId = savedInstanceState.getLong(KEY_USER_ID);
+            Long userId = SharedPrefsUtils.getUserId(getContext());
 
             initEventList(events, userId);
         }
@@ -81,7 +74,6 @@ public class MyEventsFragment extends BaseFragment implements IMyEvents.View, Cr
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putLong(KEY_USER_ID, adapter.getUserId());
         outState.putParcelableArrayList(KEY_EVENTS, adapter.getEvents());
     }
 
@@ -121,10 +113,6 @@ public class MyEventsFragment extends BaseFragment implements IMyEvents.View, Cr
     public void addEventClicked() {
         CreateEventDialog dialog = new CreateEventDialog();
 
-        Bundle args = new Bundle();
-        args.putLong(CreateEventDialog.KEY_USER_ID, adapter.getUserId());
-
-        dialog.setArguments(args);
         dialog.setTargetFragment(this, 0);
         dialog.show(getActivity().getSupportFragmentManager(), CREATE_EVENT_TAG);
     }
@@ -149,6 +137,6 @@ public class MyEventsFragment extends BaseFragment implements IMyEvents.View, Cr
     }
 
     private void showEvent(Long eventId) {
-        ((MainActivity) getActivity()).addFragment(EventFragment.newInstance(eventId, adapter.getUserId()));
+        ((MainActivity) getActivity()).addFragment(EventFragment.newInstance(eventId));
     }
 }

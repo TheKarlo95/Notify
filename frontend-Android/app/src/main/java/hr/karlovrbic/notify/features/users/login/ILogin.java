@@ -13,7 +13,7 @@ import hr.karlovrbic.notify.model.UserLogin;
 public interface ILogin extends IBase {
 
     interface View extends IBase.View {
-        void loginSuccessful(Long userId);
+        void loginSuccessful(User user);
     }
 
     interface Presenter extends IBase.Presenter {

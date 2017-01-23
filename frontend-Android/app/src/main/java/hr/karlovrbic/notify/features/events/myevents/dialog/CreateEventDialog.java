@@ -10,22 +10,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 
-import java.util.Calendar;
-import java.util.Date;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import hr.karlovrbic.notify.R;
 import hr.karlovrbic.notify.features.events.myevents.MyEventsFragment;
 import hr.karlovrbic.notify.model.EventCreate;
+import hr.karlovrbic.notify.utils.DateUtils;
+import hr.karlovrbic.notify.utils.SharedPrefsUtils;
 
 /**
  * Created by thekarlo95 on 22.01.17..
  */
 
 public class CreateEventDialog extends DialogFragment {
-
-    public static final String KEY_USER_ID = "user_id";
 
     @BindView(R.id.et_title)
     EditText etTitle;
@@ -44,7 +41,7 @@ public class CreateEventDialog extends DialogFragment {
 
         ButterKnife.bind(this, view);
 
-        final Long userId = getArguments().getLong(KEY_USER_ID);
+        final Long userId = SharedPrefsUtils.getUserId(getContext());
 
         builder.setView(view)
                 .setPositiveButton("Create", new DialogInterface.OnClickListener() {
@@ -54,7 +51,7 @@ public class CreateEventDialog extends DialogFragment {
                         String date = etDate.getText().toString();
                         String description = etDescription.getText().toString();
 
-                        EventCreate eventCreate = new EventCreate(userId, title, toDate(date), description);
+                        EventCreate eventCreate = new EventCreate(userId, title, DateUtils.toDate(date), description);
 
                         ((MyEventsFragment) getTargetFragment()).callback(eventCreate);
                         dismiss();
@@ -67,25 +64,5 @@ public class CreateEventDialog extends DialogFragment {
                 })
                 .setCancelable(true);
         return builder.create();
-    }
-
-    private static Date toDate(@NonNull String birthday) {
-        String[] split = birthday.split("\\.|:|\\s");
-        Calendar c = Calendar.getInstance();
-
-        if (split.length >= 5) {
-            c.set(Integer.parseInt(split[2].trim()),
-                    Integer.parseInt(split[1].trim()) - 1,
-                    Integer.parseInt(split[0].trim()),
-                    Integer.parseInt(split[3].trim()),
-                    Integer.parseInt(split[4].trim()));
-        } else if (split.length >= 3) {
-            c.set(Integer.parseInt(split[2].trim()),
-                    Integer.parseInt(split[1].trim()) - 1,
-                    Integer.parseInt(split[0].trim()),
-                    0,
-                    0);
-        }
-        return c.getTime();
     }
 }

@@ -64,7 +64,7 @@ public class User implements Parcelable {
     @Expose
     private List<Event> events;
 
-    private User(Long id,
+    public User(Long id,
                  String username,
                  String email,
                  String name,

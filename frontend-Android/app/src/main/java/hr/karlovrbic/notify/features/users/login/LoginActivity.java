@@ -17,6 +17,8 @@ import hr.karlovrbic.notify.dagger.modules.LoginModule;
 import hr.karlovrbic.notify.features.main.MainActivity;
 import hr.karlovrbic.notify.features.shared.view.BaseView;
 import hr.karlovrbic.notify.features.users.signup.SignUpActivity;
+import hr.karlovrbic.notify.model.User;
+import hr.karlovrbic.notify.utils.SharedPrefsUtils;
 
 public class LoginActivity extends BaseView implements ILogin.View {
 
@@ -50,8 +52,9 @@ public class LoginActivity extends BaseView implements ILogin.View {
     }
 
     @Override
-    public void loginSuccessful(Long userId) {
-        startActivity(MainActivity.buildIntent(this, userId));
+    public void loginSuccessful(User user) {
+        SharedPrefsUtils.saveUser(getApplicationContext(), user);
+        startActivity(MainActivity.buildIntent(this));
     }
 
     @OnClick(R.id.btn_login)

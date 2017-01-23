@@ -1,6 +1,5 @@
 package hr.karlovrbic.notify.features.events.event;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
@@ -12,9 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 import javax.inject.Inject;
 
@@ -32,6 +29,8 @@ import hr.karlovrbic.notify.features.shared.ItemClickListener;
 import hr.karlovrbic.notify.features.shared.view.BaseFragment;
 import hr.karlovrbic.notify.model.Event;
 import hr.karlovrbic.notify.model.Message;
+import hr.karlovrbic.notify.utils.DateUtils;
+import hr.karlovrbic.notify.utils.SharedPrefsUtils;
 
 /**
  * Created by thekarlo95 on 21.01.17..
@@ -65,14 +64,12 @@ public class EventFragment extends BaseFragment implements IEvent.View, CreateMe
 
     private MessagesListAdapter adapter;
     private Unbinder unbinder;
-    private Long userId;
 
-    public static EventFragment newInstance(long id, long userId) {
+    public static EventFragment newInstance(long id) {
         EventFragment fragment = new EventFragment();
 
         Bundle bundle = new Bundle();
         bundle.putLong(ARGUMENT_EVENT_ID, id);
-        bundle.putLong(ARGUMENT_USER_ID, userId);
         fragment.setArguments(bundle);
 
         return fragment;
@@ -88,11 +85,9 @@ public class EventFragment extends BaseFragment implements IEvent.View, CreateMe
 
         if (savedInstanceState == null) {
             Bundle args = getArguments();
-            userId = args.getLong(ARGUMENT_USER_ID);
             presenter.getEvent(args.getLong(ARGUMENT_EVENT_ID));
         } else {
             event = savedInstanceState.getParcelable(KEY_EVENT);
-            userId = savedInstanceState.getLong(kEY_USER_ID);
             showEvent(event);
         }
 
@@ -103,7 +98,6 @@ public class EventFragment extends BaseFragment implements IEvent.View, CreateMe
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelable(KEY_EVENT, event);
-        outState.putLong(kEY_USER_ID, userId);
     }
 
     @Override
@@ -118,11 +112,13 @@ public class EventFragment extends BaseFragment implements IEvent.View, CreateMe
         this.event = event;
         if (event != null) {
             tvTitle.setText(event.getTitle());
-            tvDate.setText(toString(event.getDate()));
+            tvDate.setText(DateUtils.toString(event.getDate()));
             tvDescription.setText(event.getDescription());
 
             adapter.setMessages(event.getMessages());
             adapter.setEventId(event.getId());
+
+            Long userId = SharedPrefsUtils.getUserId(getContext());
 
             if(userId.equals(event.getCreator().getId())) {
                 btnAddMessage.setVisibility(View.VISIBLE);
@@ -168,17 +164,5 @@ public class EventFragment extends BaseFragment implements IEvent.View, CreateMe
         rvEvents.setLayoutManager(layoutManager);
         rvEvents.addItemDecoration(new DividerItemDecoration(rvEvents.getContext(), layoutManager.getOrientation()));
         rvEvents.setAdapter(adapter);
-    }
-
-    @SuppressLint("SimpleDateFormat")
-    private static String toString(Date date) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
-        String strDate = null;
-
-        if (date != null) {
-            strDate = dateFormat.format(date);
-        }
-
-        return strDate;
     }
 }

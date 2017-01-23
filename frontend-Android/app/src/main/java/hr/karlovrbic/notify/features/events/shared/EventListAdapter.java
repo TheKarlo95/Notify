@@ -18,6 +18,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import hr.karlovrbic.notify.R;
 import hr.karlovrbic.notify.features.shared.ItemClickListener;
 import hr.karlovrbic.notify.model.Event;
+import hr.karlovrbic.notify.utils.SharedPrefsUtils;
 
 /**
  * Created by thekarlo95 on 21.01.17..
@@ -26,7 +27,6 @@ import hr.karlovrbic.notify.model.Event;
 public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.ViewHolder> {
 
     private ArrayList<Event> events;
-    private Long userId;
     private ItemClickListener<Event> followButtonClickListener;
     private ItemClickListener<Event> clickListener;
     private Context context;
@@ -37,7 +37,6 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
                             ItemClickListener<Event> clickListener,
                             ItemClickListener<Event> followButtonClickListener) {
         this.events = events;
-        this.userId = userId;
         this.context = context;
         this.clickListener = clickListener;
         this.followButtonClickListener = followButtonClickListener;
@@ -51,6 +50,8 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Event event = events.get(position);
+        Long userId = SharedPrefsUtils.getUserId(context);
+
         holder.bind(event, userId);
     }
 
@@ -61,10 +62,6 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
         } else {
             return events.size();
         }
-    }
-
-    public Long getUserId() {
-        return userId;
     }
 
     public ArrayList<Event> getEvents() {

@@ -25,12 +25,10 @@ import hr.karlovrbic.notify.features.main.MainActivity;
 import hr.karlovrbic.notify.features.shared.ItemClickListener;
 import hr.karlovrbic.notify.features.shared.view.BaseFragment;
 import hr.karlovrbic.notify.model.Event;
-
-import static hr.karlovrbic.notify.features.main.MainActivity.KEY_USER_ID;
+import hr.karlovrbic.notify.utils.SharedPrefsUtils;
 
 public class FollowedEventListFragment extends BaseFragment implements IFollowedEventList.View {
 
-    private static final String ARGUMENT_USER_ID = "user_id";
     private static final String KEY_EVENTS = "events";
 
     @BindView(R.id.rv_followed_events)
@@ -43,14 +41,8 @@ public class FollowedEventListFragment extends BaseFragment implements IFollowed
     private Unbinder unbinder;
     private ArrayList<Event> events;
 
-    public static FollowedEventListFragment newInstance(long userId) {
-        FollowedEventListFragment fragment = new FollowedEventListFragment();
-
-        Bundle bundle = new Bundle();
-        bundle.putLong(ARGUMENT_USER_ID, userId);
-        fragment.setArguments(bundle);
-
-        return fragment;
+    public static FollowedEventListFragment newInstance() {
+        return new FollowedEventListFragment();
     }
 
     @Override
@@ -65,15 +57,14 @@ public class FollowedEventListFragment extends BaseFragment implements IFollowed
         unbinder = ButterKnife.bind(this, view);
 
         if (savedInstanceState == null) {
-            Bundle args = getArguments();
-            Long userId = args.getLong(KEY_USER_ID);
+            Long userId = SharedPrefsUtils.getUserId(getContext());
 
             initEventList(null, userId);
 
             presenter.getFollowedEventList(userId);
         } else {
             ArrayList<Event> events = savedInstanceState.getParcelableArrayList(KEY_EVENTS);
-            Long userId = savedInstanceState.getLong(KEY_USER_ID);
+            Long userId = SharedPrefsUtils.getUserId(getContext());
 
             initEventList(events, userId);
         }
@@ -142,6 +133,6 @@ public class FollowedEventListFragment extends BaseFragment implements IFollowed
     }
 
     private void showEvent(Long eventId) {
-        ((MainActivity) getActivity()).addFragment(EventFragment.newInstance(eventId,adapter.getUserId()));
+        ((MainActivity) getActivity()).addFragment(EventFragment.newInstance(eventId));
     }
 }

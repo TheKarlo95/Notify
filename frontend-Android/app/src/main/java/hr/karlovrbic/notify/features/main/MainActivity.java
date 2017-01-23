@@ -22,22 +22,18 @@ import hr.karlovrbic.notify.features.users.list.UserListFragment;
 
 public class MainActivity extends BaseView implements IMain.View {
 
-    public static final String KEY_USER_ID = "user_id";
     private static final String KEY_FIRST_FRAGMENT_ADDED = "first_fragment_added";
     private static final String KEY_LAST_ITEM_ID = "last_item_id";
 
     @BindView(R.id.bnv_menu)
     BottomNavigationView bnvMenu;
 
-    private long userId;
     private boolean firstFragmentAdded;
     private int lastItemId;
 
     @NonNull
-    public static Intent buildIntent(@NonNull Context context, Long userId) {
-        Intent intent = new Intent(context, MainActivity.class);
-        intent.putExtra(KEY_USER_ID, userId);
-        return intent;
+    public static Intent buildIntent(@NonNull Context context) {
+        return new Intent(context, MainActivity.class);
     }
 
     @Override
@@ -50,6 +46,7 @@ public class MainActivity extends BaseView implements IMain.View {
         bnvMenu.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
                 switch (item.getItemId()) {
                     case R.id.action_users:
                         lastItemId = 0;
@@ -57,15 +54,15 @@ public class MainActivity extends BaseView implements IMain.View {
                         break;
                     case R.id.action_events:
                         lastItemId = 1;
-                        replaceFragment(EventListFragment.newInstance(userId));
+                        replaceFragment(EventListFragment.newInstance());
                         break;
                     case R.id.action_followed:
                         lastItemId = 2;
-                        replaceFragment(FollowedEventListFragment.newInstance(userId));
+                        replaceFragment(FollowedEventListFragment.newInstance());
                         break;
                     case R.id.action_my_events:
                         lastItemId = 3;
-                        replaceFragment(MyEventsFragment.newInstance(userId));
+                        replaceFragment(MyEventsFragment.newInstance());
                         break;
                 }
                 return true;
@@ -75,11 +72,8 @@ public class MainActivity extends BaseView implements IMain.View {
         if (savedInstanceState != null) {
             firstFragmentAdded = savedInstanceState.getBoolean(KEY_FIRST_FRAGMENT_ADDED);
             lastItemId = savedInstanceState.getInt(KEY_LAST_ITEM_ID, R.id.action_users);
-            userId = savedInstanceState.getLong(KEY_USER_ID);
 
             bnvMenu.getMenu().getItem(lastItemId).setChecked(true);
-        } else {
-            userId = getIntent().getExtras().getLong(KEY_USER_ID);
         }
 
         if (!firstFragmentAdded) {
@@ -91,7 +85,6 @@ public class MainActivity extends BaseView implements IMain.View {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putLong(KEY_USER_ID, userId);
         outState.putBoolean(KEY_FIRST_FRAGMENT_ADDED, firstFragmentAdded);
         outState.putInt(KEY_LAST_ITEM_ID, lastItemId);
     }
