@@ -172,8 +172,4 @@ gradle-app.setting
 
 # End of https://www.gitignore.io/api/java,android,intellij,intellij+iml,gradle
 app/build/
-app/libs/
-app/src/androidTest/
-app/src/main/java/hr/karlovrbic/notify/features/messages/
-app/src/test/
 build/generated/
