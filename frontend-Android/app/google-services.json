@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "927381726161",
+    "firebase_url": "https://notify-bae6c.firebaseio.com",
+    "project_id": "notify-bae6c",
+    "storage_bucket": "notify-bae6c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:927381726161:android:f7b77df3c6c88ae8",
+        "android_client_info": {
+          "package_name": "hr.karlovrbic.notify"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "927381726161-8somi26bhk9bh68mgvv6ks279g3k1shg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDKaEzcx_0tt5MK76AmZOtTC46luDaHObA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

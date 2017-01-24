@@ -5,6 +5,7 @@ import javax.inject.Singleton;
 import dagger.Component;
 import hr.karlovrbic.notify.dagger.modules.EventListModule;
 import hr.karlovrbic.notify.dagger.modules.EventModule;
+import hr.karlovrbic.notify.dagger.modules.FirebaseInstanceIdModule;
 import hr.karlovrbic.notify.dagger.modules.FollowedEventListModule;
 import hr.karlovrbic.notify.dagger.modules.LoginModule;
 import hr.karlovrbic.notify.dagger.modules.MainModule;
@@ -47,4 +48,6 @@ public interface AppComponent {
     MyEventsComponent plus(MyEventsModule module);
 
     EventComponent plus(EventModule module);
+
+    FirebaseInstanceIdComponent plus(FirebaseInstanceIdModule module);
 }

@@ -13,6 +13,7 @@ import java.util.Date;
  */
 public class UserSignUp {
 
+    private static final String ATTRIBUTE_TOKEN = "fcm_token";
     private static final String ATTRIBUTE_USERNAME = "username";
     private static final String ATTRIBUTE_PASSWORD = "password";
     private static final String ATTRIBUTE_PASSWORD_CONFIRMATION = "password_confirmation";
@@ -20,8 +21,11 @@ public class UserSignUp {
     private static final String ATTRIBUTE_NAME = "name";
     private static final String ATTRIBUTE_SURNAME = "surname";
     private static final String ATTRIBUTE_BIRTHDAY = "birthday";
-    private static final String ATTRIBUTE_PROFILE_CONFIGURATION = "profile_configuration";
 
+
+    @SerializedName(ATTRIBUTE_TOKEN)
+    @Expose
+    private String token;
     @SerializedName(ATTRIBUTE_USERNAME)
     @Expose
     private String username;
@@ -43,9 +47,24 @@ public class UserSignUp {
     @SerializedName(ATTRIBUTE_BIRTHDAY)
     @Expose
     private Date birthDay;
-    @SerializedName(ATTRIBUTE_PROFILE_CONFIGURATION)
-    @Expose
-    private String profileConfiguration;
+
+    public UserSignUp(String token,
+                      String username,
+                      String password,
+                      String passwordConfirmation,
+                      String email,
+                      String name,
+                      String surname,
+                      Date birthDay) {
+        this.token =token;
+        this.username = username;
+        this.password = password;
+        this.passwordConfirmation = passwordConfirmation;
+        this.email = email;
+        this.name = name;
+        this.surname = surname;
+        this.birthDay = birthDay;
+    }
 
     public UserSignUp(String username,
                       String password,
@@ -54,17 +73,14 @@ public class UserSignUp {
                       String name,
                       String surname,
                       Date birthDay) {
-        this.username = username;
-        this.password = password;
-        this.passwordConfirmation = passwordConfirmation;
-        this.email = email;
-        this.name = name;
-        this.surname = surname;
-        this.birthDay = birthDay;
-        this.profileConfiguration = "2";
+        this(null, username, password, passwordConfirmation, email, name, surname, birthDay);
     }
 
     public UserSignUp() {
+    }
+
+    public String getToken() {
+        return token;
     }
 
     public String getUsername() {
@@ -101,22 +117,24 @@ public class UserSignUp {
 
         if (o == null || getClass() != o.getClass()) return false;
 
-        UserSignUp user = (UserSignUp) o;
+        UserSignUp that = (UserSignUp) o;
 
         return new EqualsBuilder()
-                .append(username, user.username)
-                .append(password, user.password)
-                .append(passwordConfirmation, user.passwordConfirmation)
-                .append(email, user.email)
-                .append(name, user.name)
-                .append(surname, user.surname)
-                .append(birthDay, user.birthDay)
+                .append(token, that.token)
+                .append(username, that.username)
+                .append(password, that.password)
+                .append(passwordConfirmation, that.passwordConfirmation)
+                .append(email, that.email)
+                .append(name, that.name)
+                .append(surname, that.surname)
+                .append(birthDay, that.birthDay)
                 .isEquals();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
+                .append(token)
                 .append(username)
                 .append(password)
                 .append(passwordConfirmation)
@@ -129,8 +147,9 @@ public class UserSignUp {
 
     @Override
     public String toString() {
-        return "User{" +
-                "username='" + username + '\'' +
+        return "UserSignUp{" +
+                "token='" + token + '\'' +
+                ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", passwordConfirmation='" + passwordConfirmation + '\'' +
                 ", email='" + email + '\'' +

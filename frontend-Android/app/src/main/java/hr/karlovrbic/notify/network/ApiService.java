@@ -6,6 +6,7 @@ import hr.karlovrbic.notify.model.Event;
 import hr.karlovrbic.notify.model.EventCreate;
 import hr.karlovrbic.notify.model.Message;
 import hr.karlovrbic.notify.model.MessageCreate;
+import hr.karlovrbic.notify.model.TokenUpdate;
 import hr.karlovrbic.notify.model.User;
 import hr.karlovrbic.notify.model.UserLogin;
 import hr.karlovrbic.notify.model.UserSignUp;
@@ -33,6 +34,8 @@ public interface ApiService {
     @GET("users/{id}")
     Observable<User> getUser(@Path("id") Long userId);
 
+    @PATCH("users/{id}/token")
+    Observable<User> updateToken(@Path("id") Long userId, @Body TokenUpdate tokenUpdate);
 
     @POST("events")
     Observable<Event> createEvent(@Body EventCreate eventCreate);

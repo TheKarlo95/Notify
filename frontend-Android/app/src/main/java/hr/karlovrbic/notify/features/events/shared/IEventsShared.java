@@ -11,6 +11,8 @@ import hr.karlovrbic.notify.model.Event;
 
 public interface IEventsShared extends IBase {
 
+    String TOPIC_NAME_FORMAT = "event-%d-%d";
+
     interface View extends IBase.View {
         void changeEvent(Event event, int adapterPosition);
     }

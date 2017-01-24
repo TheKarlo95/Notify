@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.widget.EditText;
 
+import com.google.firebase.messaging.FirebaseMessaging;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -41,6 +43,8 @@ public class LoginActivity extends BaseView implements ILogin.View {
         setContentView(R.layout.activity_login);
 
         ButterKnife.bind(this);
+
+        FirebaseMessaging.getInstance().subscribeToTopic("some-topic");
     }
 
     @Override
