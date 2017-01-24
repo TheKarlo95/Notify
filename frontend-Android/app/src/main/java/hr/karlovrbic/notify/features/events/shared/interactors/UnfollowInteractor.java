@@ -35,7 +35,7 @@ public class UnfollowInteractor extends BaseInteractor<Event, List<Long>> implem
         Long userId = ids.get(0);
         Long eventId = ids.get(1);
 
-        FirebaseMessaging.getInstance().subscribeToTopic(String.format(TOPIC_NAME_FORMAT, userId, eventId));
+        FirebaseMessaging.getInstance().unsubscribeFromTopic(String.format(TOPIC_NAME_FORMAT, userId, eventId));
 
         return service.unfollowEvent(userId, eventId);
     }
