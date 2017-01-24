@@ -27,6 +27,7 @@ public class User implements Parcelable {
     };
 
     private static final String ATTRIBUTE_ID = "id";
+    private static final String ATTRIBUTE_TOKEN = "fcm_token";
     private static final String ATTRIBUTE_USERNAME = "username";
     private static final String ATTRIBUTE_EMAIL = "email";
     private static final String ATTRIBUTE_NAME = "name";
@@ -39,6 +40,9 @@ public class User implements Parcelable {
     @SerializedName(ATTRIBUTE_ID)
     @Expose
     private Long id;
+    @SerializedName(ATTRIBUTE_TOKEN)
+    @Expose
+    private String token;
     @SerializedName(ATTRIBUTE_USERNAME)
     @Expose
     private String username;
@@ -65,15 +69,17 @@ public class User implements Parcelable {
     private List<Event> events;
 
     public User(Long id,
-                 String username,
-                 String email,
-                 String name,
-                 String surname,
-                 Date birthDay,
-                 Date createdAt,
-                 String profilePictureLink,
-                 List<Event> events) {
+                String token,
+                String username,
+                String email,
+                String name,
+                String surname,
+                Date birthDay,
+                Date createdAt,
+                String profilePictureLink,
+                List<Event> events) {
         this.id = id;
+        this.token = token;
         this.username = username;
         this.email = email;
         this.name = name;
@@ -103,6 +109,10 @@ public class User implements Parcelable {
 
     public Long getId() {
         return id;
+    }
+
+    public String getToken() {
+        return token;
     }
 
     public String getUsername() {
@@ -189,7 +199,6 @@ public class User implements Parcelable {
                 ", events=" + events +
                 '}';
     }
-
 
 
     public static class Event implements Parcelable {
