@@ -1,138 +1,183 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_sign_up"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/app_background"
-    android:orientation="vertical"
-    android:scrollbarAlwaysDrawVerticalTrack="true"
-    tools:context=".features.messages.signup.SignUpActivity">
+    android:background="@color/white"
+    tools:context=".features.users.signup.SignUpActivity">
 
-    <android.support.v7.widget.CardView
-        android:layout_width="fill_parent"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
         android:layout_margin="30dp"
-        android:elevation="5dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingBottom="30dp">
 
-        <ScrollView
+        <android.support.v7.widget.CardView
+            android:id="@+id/cd_login_form"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:elevation="2dp"
+            app:cardUseCompatPadding="true">
 
             <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:padding="20dp">
 
                 <android.support.design.widget.TextInputLayout
+                    android:id="@+id/til_username"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
                     <EditText
                         android:id="@+id/et_username"
-                        android:layout_width="fill_parent"
+                        style="@style/EditText"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Username"
-                        android:inputType="textPersonName"
-                        android:maxLines="1"/>
+                        android:imeOptions="actionNext"
+                        android:inputType="textVisiblePassword|textNoSuggestions"
+                        android:maxLines="1"
+                        android:nextFocusDown="@+id/et_password"/>
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
+                    android:id="@+id/til_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
                     <EditText
                         android:id="@+id/et_password"
-                        android:layout_width="fill_parent"
+                        style="@style/EditText"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Password"
+                        android:imeOptions="actionNext"
                         android:inputType="textPassword"
-                        android:maxLines="1"/>
+                        android:maxLines="1"
+                        android:nextFocusDown="@+id/et_password_confirmation"
+                        android:nextFocusUp="@+id/et_username"/>
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
+                    android:id="@+id/til_password_confirmation"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
                     <EditText
                         android:id="@+id/et_password_confirmation"
-                        android:layout_width="fill_parent"
+                        style="@style/EditText"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Confirm password"
+                        android:imeOptions="actionNext"
                         android:inputType="textPassword"
-                        android:maxLines="1"/>
+                        android:maxLines="1"
+                        android:nextFocusDown="@+id/et_email"
+                        android:nextFocusUp="@+id/et_password"/>
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
+                    android:id="@+id/til_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
                     <EditText
                         android:id="@+id/et_email"
-                        android:layout_width="fill_parent"
+                        style="@style/EditText"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="E-Mail Address"
+                        android:hint="Email"
+                        android:imeOptions="actionNext"
                         android:inputType="textEmailAddress"
-                        android:maxLines="1"/>
+                        android:maxLines="1"
+                        android:nextFocusDown="@+id/et_name"
+                        android:nextFocusUp="@+id/et_password_confirmation"/>
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
+                    android:id="@+id/til_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
                     <EditText
                         android:id="@+id/et_name"
+                        style="@style/EditText"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:hint="Name"
+                        android:imeOptions="actionNext"
                         android:inputType="textPersonName|textCapWords"
-                        android:maxLines="1"/>
+                        android:maxLines="1"
+                        android:nextFocusDown="@+id/et_surname"
+                        android:nextFocusUp="@+id/et_email"/>
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
+                    android:id="@+id/til_surname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
                     <EditText
                         android:id="@+id/et_surname"
+                        style="@style/EditText"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:hint="Surname"
+                        android:imeOptions="actionNext"
                         android:inputType="textPersonName|textCapWords"
-                        android:maxLines="1"/>
+                        android:maxLines="1"
+                        android:nextFocusDown="@+id/et_birthday"
+                        android:nextFocusUp="@+id/et_name"
+                        android:theme="@style/EditText"/>
                 </android.support.design.widget.TextInputLayout>
 
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <EditText
-                        android:id="@+id/et_birthday"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Birthday"
-                        android:inputType="text"
-                        android:maxLines="1"/>
-                </android.support.design.widget.TextInputLayout>
-
-
-                <Button
-                    android:id="@+id/btn_sign_up"
-                    android:layout_width="fill_parent"
+                <TextView
+                    style="@style/TextViewSecondary"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="20dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="20dp"
-                    android:background="#d67601"
-                    android:text="Sign up"
-                    android:textAllCaps="true"
-                    android:textColor="#fff"
-                    android:textSize="18sp"/>
+                    android:labelFor="@+id/dp_birthday"
+                    android:text="Select your birthday"/>
+
+                <DatePicker
+                    android:id="@+id/dp_birthday"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:calendarViewShown="false"
+                    android:datePickerMode="spinner"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btn_cancel"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:nextFocusRight="@+id/btn_login"
+                        android:nextFocusUp="@+id/et_password"
+                        android:text="Cancel"
+                        android:theme="@style/Button.Flat"/>
+
+                    <Button
+                        android:id="@+id/btn_sign_up"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:nextFocusLeft="@+id/btn_sign_up"
+                        android:nextFocusUp="@+id/et_password"
+                        android:text="Sign Up"
+                        android:theme="@style/Button.Colored"/>
+                </LinearLayout>
             </LinearLayout>
-        </ScrollView>
-    </android.support.v7.widget.CardView>
-</RelativeLayout>
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
+</ScrollView>
