@@ -1,5 +1,9 @@
 package hr.karlovrbic.notify.features.events.followed;
 
+import android.annotation.SuppressLint;
+
+import com.google.firebase.messaging.FirebaseMessaging;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,6 +61,7 @@ public class FollowedEventListPresenter implements IFollowedEventList.Presenter 
         }, userId);
     }
 
+    @SuppressLint("DefaultLocale")
     @Override
     public void followClicked(Event event, long userId, final int adapterPosition) {
         if (!event.getCreator().getId().equals(userId)) {
@@ -66,6 +71,9 @@ public class FollowedEventListPresenter implements IFollowedEventList.Presenter 
 
             view.showLoading("Loading");
             if (event.isFollower(userId)) {
+                FirebaseMessaging.getInstance().unsubscribeFromTopic(String.format(IEventsShared.TOPIC_NAME_FORMAT
+                        , event.getCreator().getId()
+                        , event.getId()));
                 unfollowInteractor.execute(new DisposableObserver<Event>() {
                     @Override
                     public void onNext(Event value) {
@@ -84,6 +92,9 @@ public class FollowedEventListPresenter implements IFollowedEventList.Presenter 
                     }
                 }, ids);
             } else {
+                FirebaseMessaging.getInstance().subscribeToTopic(String.format(IEventsShared.TOPIC_NAME_FORMAT
+                        , event.getCreator().getId()
+                        , event.getId()));
                 followInteractor.execute(new DisposableObserver<Event>() {
                     @Override
                     public void onNext(Event value) {
