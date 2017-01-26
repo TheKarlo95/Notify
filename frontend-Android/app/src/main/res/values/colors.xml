@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#29B6F6</color>
-    <color name="colorPrimaryDark">#039BE5</color>
-    <color name="colorAccent">#FFC107</color>
+    <color name="colorPrimary">#795548</color>
+    <color name="colorPrimaryDark">#5D4037</color>
+    <color name="colorPrimaryLight">#D7CCC8</color>
+    <color name="colorAccent">#009688</color>
     <color name="colorSecondary">#81D4FA</color>
     <color name="colorSecondaryDark">#29B6F6</color>
     <color name="colorSecondaryDarker">#03A9F4</color>
-    <color name="white">#FFF</color>
+    <color name="white">#FFFAFA</color>
 
     <color name="colorFollowButton">#FFC107</color>
     <color name="colorUnfollowButton">#664d00</color>
+
+
+
+    <color name="primaryText">#212121</color>
+    <color name="secondaryText">#757575</color>
+    <color name="icons">#FFFFFF</color>
+    <color name="divider">#BDBDBD</color>
 </resources>
