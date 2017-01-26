@@ -21,7 +21,17 @@ public abstract class BaseView extends AppCompatActivity implements IBase.View {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         injectDependencies(((AndroidApplication) getApplication()).getApplicationComponent());
+        initProgressDialog();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        progressDialog.cancel();
+        progressDialog = null;
     }
 
     @Override
@@ -36,11 +46,9 @@ public abstract class BaseView extends AppCompatActivity implements IBase.View {
 
     @Override
     public void showLoading(String message) {
-        hideLoading();
-        initProgressDialog(message);
-
-
-        if (!progressDialog.isShowing()) {
+        if (progressDialog != null) {
+            progressDialog.hide();
+            progressDialog.setMessage(message);
             progressDialog.show();
         }
     }
@@ -54,15 +62,13 @@ public abstract class BaseView extends AppCompatActivity implements IBase.View {
     public void hideLoading() {
         if (progressDialog != null) {
             progressDialog.hide();
-            progressDialog = null;
         }
     }
 
     protected abstract void injectDependencies(AppComponent appComponent);
 
-    private void initProgressDialog(String message) {
+    private void initProgressDialog() {
         progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage(message);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setCancelable(false);
     }
