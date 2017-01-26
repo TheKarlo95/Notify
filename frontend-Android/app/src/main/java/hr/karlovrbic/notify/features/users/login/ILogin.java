@@ -18,6 +18,8 @@ public interface ILogin extends IBase {
 
     interface Presenter extends IBase.Presenter {
         void login(@NonNull String username, @NonNull String password);
+
+        void updateToken(Long userId, String token);
     }
 
     interface Interactor extends IBase.Interactor<User, UserLogin> {
