@@ -3,6 +3,7 @@ package hr.karlovrbic.notify.features.shared.view;
 import android.content.Context;
 import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 
 import hr.karlovrbic.notify.AndroidApplication;
 import hr.karlovrbic.notify.dagger.components.AppComponent;
@@ -22,27 +23,42 @@ public abstract class BaseFragment extends Fragment implements IBase.View {
 
     @Override
     public void showLoading(String message) {
-        ((BaseView) getActivity()).showLoading(message);
+        FragmentActivity activity = getActivity();
+        if (activity != null && activity instanceof BaseView) {
+            ((BaseView) activity).showLoading(message);
+        }
     }
 
     @Override
     public void showLoading(@StringRes int id) {
-        ((BaseView) getActivity()).showLoading(id);
+        FragmentActivity activity = getActivity();
+        if (activity != null && activity instanceof BaseView) {
+            ((BaseView) activity).showLoading(id);
+        }
     }
 
     @Override
     public void hideLoading() {
-        ((BaseView) getActivity()).hideLoading();
+        FragmentActivity activity = getActivity();
+        if (activity != null && activity instanceof BaseView) {
+            ((BaseView) activity).hideLoading();
+        }
     }
 
     @Override
     public void showMessage(String message) {
-        ((BaseView) getActivity()).showMessage(message);
+        FragmentActivity activity = getActivity();
+        if (activity != null && activity instanceof BaseView) {
+            ((BaseView) activity).showMessage(message);
+        }
     }
 
     @Override
     public void showMessage(@StringRes int id) {
-        ((BaseView) getActivity()).showMessage(id);
+        FragmentActivity activity = getActivity();
+        if (activity != null && activity instanceof BaseView) {
+            ((BaseView) activity).showMessage(id);
+        }
     }
 
     protected abstract void injectDependencies(AppComponent appComponent);
