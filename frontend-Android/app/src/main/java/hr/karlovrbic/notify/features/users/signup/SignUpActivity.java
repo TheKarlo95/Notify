@@ -1,18 +1,14 @@
 package hr.karlovrbic.notify.features.users.signup;
 
-import android.app.Activity;
-import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.DialogFragment;
-import android.text.InputType;
+import android.support.design.widget.TextInputLayout;
 import android.widget.DatePicker;
-import android.widget.EditText;
 
 import java.util.Calendar;
+import java.util.Date;
 
 import javax.inject.Inject;
 
@@ -24,23 +20,24 @@ import hr.karlovrbic.notify.dagger.components.AppComponent;
 import hr.karlovrbic.notify.dagger.modules.SignUpModule;
 import hr.karlovrbic.notify.features.shared.view.BaseView;
 import hr.karlovrbic.notify.features.users.login.LoginActivity;
+import hr.karlovrbic.notify.utils.InputUtil;
 
 public class SignUpActivity extends BaseView implements ISignUp.View {
 
-    @BindView(R.id.et_username)
-    EditText etUsername;
-    @BindView(R.id.et_password)
-    EditText etPassword;
-    @BindView(R.id.et_password_confirmation)
-    EditText etPasswordConfirmation;
-    @BindView(R.id.et_email)
-    EditText etEmail;
-    @BindView(R.id.et_name)
-    EditText etName;
-    @BindView(R.id.et_surname)
-    EditText etSurname;
-    @BindView(R.id.et_birthday)
-    EditText etBirthday;
+    @BindView(R.id.til_username)
+    TextInputLayout tilUsername;
+    @BindView(R.id.til_password)
+    TextInputLayout tilPassword;
+    @BindView(R.id.til_password_confirmation)
+    TextInputLayout tilPasswordConfirmation;
+    @BindView(R.id.til_email)
+    TextInputLayout tilEmail;
+    @BindView(R.id.til_name)
+    TextInputLayout tilName;
+    @BindView(R.id.til_surname)
+    TextInputLayout tilSurname;
+    @BindView(R.id.dp_birthday)
+    DatePicker dpBirthday;
 
     @Inject
     ISignUp.Presenter presenter;
@@ -57,8 +54,7 @@ public class SignUpActivity extends BaseView implements ISignUp.View {
 
         ButterKnife.bind(this);
 
-        etBirthday.setRawInputType(InputType.TYPE_NULL);
-        etBirthday.setTextIsSelectable(true);
+        dpBirthday.setMaxDate(getMaxDate().getTime());
     }
 
     @Override
@@ -69,35 +65,37 @@ public class SignUpActivity extends BaseView implements ISignUp.View {
         }
     }
 
+    @OnClick(R.id.btn_cancel)
     @Override
     public void signUpSuccessful() {
         startActivity(LoginActivity.buildIntent(this));
     }
 
+    @SuppressWarnings("ConstantConditions")
     @OnClick(R.id.btn_sign_up)
     public void signUpClicked() {
-        String username = etUsername.getText().toString().trim();
-        String password = etPassword.getText().toString().trim();
-        String passwordConfirmation = etPasswordConfirmation.getText().toString().trim();
-        String email = etEmail.getText().toString().trim();
-        String name = etName.getText().toString().trim();
-        String surname = etSurname.getText().toString().trim();
-        String birthday = etBirthday.getText().toString().trim();
+        String username = InputUtil.getUsernameText(tilUsername);
+        String password = InputUtil.getPasswordText(tilPassword);
+        String passwordConfirmation = InputUtil.getPasswordConfiramtionText(tilPasswordConfirmation);
+        String email = InputUtil.getEmailText(tilEmail);
+        String name = InputUtil.getNameText(tilName);
+        String surname = InputUtil.getSurnameText(tilSurname);
+        Date birthday = InputUtil.getBirthdayDate(dpBirthday);
 
-
-        presenter.signUp(username,
-                password,
-                passwordConfirmation,
-                email,
-                name,
-                surname,
-                birthday);
-    }
-
-    @OnClick(R.id.et_birthday)
-    public void onBirthdayClicked(){
-        DialogFragment newFragment = new DatePickerFragment();
-        newFragment.show(getSupportFragmentManager(), "datePicker");
+        if (username != null &&
+                password != null &&
+                passwordConfirmation != null &&
+                email != null &&
+                name != null &&
+                surname != null) {
+            presenter.signUp(username,
+                    password,
+                    passwordConfirmation,
+                    email,
+                    name,
+                    surname,
+                    birthday);
+        }
     }
 
     @Override
@@ -105,23 +103,10 @@ public class SignUpActivity extends BaseView implements ISignUp.View {
         appComponent.plus(new SignUpModule(this)).inject(this);
     }
 
-    public static class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
-
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            final Calendar c = Calendar.getInstance();
-            int year = c.get(Calendar.YEAR);
-            int month = c.get(Calendar.MONTH);
-            int day = c.get(Calendar.DAY_OF_MONTH);
-
-            return new DatePickerDialog(getActivity(), this, year, month, day);
-        }
-
-        public void onDateSet(DatePicker view, int year, int month, int day) {
-            Activity activity = getActivity();
-            if(activity != null && activity instanceof SignUpActivity) {
-                ((SignUpActivity) activity).etBirthday.setText(day + "." + (month + 1) + "." + year + ".");
-            }
-        }
+    @NonNull
+    private static Date getMaxDate() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, calendar.get(Calendar.YEAR) - 18);
+        return calendar.getTime();
     }
 }

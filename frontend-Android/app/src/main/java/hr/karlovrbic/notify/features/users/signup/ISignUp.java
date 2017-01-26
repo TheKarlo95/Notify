@@ -2,6 +2,8 @@ package hr.karlovrbic.notify.features.users.signup;
 
 import android.support.annotation.NonNull;
 
+import java.util.Date;
+
 import hr.karlovrbic.notify.features.shared.IBase;
 import hr.karlovrbic.notify.model.User;
 import hr.karlovrbic.notify.model.UserSignUp;
@@ -23,7 +25,7 @@ public interface ISignUp extends IBase {
                    @NonNull String email,
                    @NonNull String name,
                    @NonNull String surname,
-                   @NonNull String birthDay);
+                   @NonNull Date birthDay);
     }
 
     interface Interactor extends IBase.Interactor<User, UserSignUp> {

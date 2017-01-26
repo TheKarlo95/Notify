@@ -2,7 +2,6 @@ package hr.karlovrbic.notify.features.users.signup;
 
 import android.support.annotation.NonNull;
 
-import java.util.Calendar;
 import java.util.Date;
 
 import javax.inject.Inject;
@@ -33,14 +32,14 @@ public class SignUpPresenter implements ISignUp.Presenter {
                        @NonNull String email,
                        @NonNull String name,
                        @NonNull String surname,
-                       @NonNull String birthDay) {
+                       @NonNull Date birthDay) {
         UserSignUp userSignUp = new UserSignUp(username,
                 password,
                 passwordConfirmation,
                 email,
                 name,
                 surname,
-                toDate(birthDay));
+                birthDay);
         view.showLoading("Signing up…");
         interactor.execute(new DisposableObserver<User>() {
             @Override
@@ -69,17 +68,5 @@ public class SignUpPresenter implements ISignUp.Presenter {
     public void cancel() {
         view.hideLoading();
         interactor.cancel();
-    }
-
-    private Date toDate(@NonNull String birthday) {
-        String[] split = birthday.split("\\.");
-        Calendar c = Calendar.getInstance();
-
-        c.set(Integer.parseInt(split[2]),
-                Integer.parseInt(split[1]) - 1,
-                Integer.parseInt(split[0]),
-                0,
-                0);
-        return c.getTime();
     }
 }
