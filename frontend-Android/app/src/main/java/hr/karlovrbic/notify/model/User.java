@@ -147,6 +147,10 @@ public class User implements Parcelable {
         return events;
     }
 
+    public void setToken(String token) {
+        this.token = token;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -189,6 +193,7 @@ public class User implements Parcelable {
     public String toString() {
         return "User{" +
                 "id=" + id +
+                ", token='" + token + '\'' +
                 ", username='" + username + '\'' +
                 ", email='" + email + '\'' +
                 ", name='" + name + '\'' +
@@ -199,7 +204,6 @@ public class User implements Parcelable {
                 ", events=" + events +
                 '}';
     }
-
 
     public static class Event implements Parcelable {
 
