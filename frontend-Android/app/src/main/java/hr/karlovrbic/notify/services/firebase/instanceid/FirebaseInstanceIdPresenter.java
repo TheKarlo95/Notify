@@ -27,7 +27,7 @@ public class FirebaseInstanceIdPresenter implements IFirebaseInstanceId.Presente
 
     @Override
     public void updateToken(Long userId, String token) {
-        if(userId == null && userId <= 0L) {
+        if(userId == null || userId <= 0L) {
             view.log(FIREBASE_TAG, "User ID cannot be null or lower than 1. User is probably not logged in.");
         } else if (token == null || token.isEmpty()) {
             view.log(FIREBASE_TAG, "Token cannot be null");
